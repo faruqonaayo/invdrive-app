@@ -90,7 +90,7 @@ export default function HabitForm() {
           </ul>
         </Container>
         <Container className={styles.labelInput}>
-          <Label labelText="Start Time" />
+          <Label labelText="Start Time:" />
           <Input
             inputType="time"
             inputName="startTime"
@@ -99,7 +99,7 @@ export default function HabitForm() {
           />
         </Container>
         <Container className={styles.labelInput}>
-          <Label labelText="End Time" />
+          <Label labelText="End Time:" />
           <Input
             inputType="time"
             inputName="endTime"
@@ -108,7 +108,7 @@ export default function HabitForm() {
           />
         </Container>
         <Container className={styles.labelInput}>
-          <Label labelText="Note" />
+          <Label labelText="Note:" />
           <textarea
             name="note"
             placeholder="Write a note"

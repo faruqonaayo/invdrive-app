@@ -12,7 +12,7 @@ export default function Navigation() {
   return (
     <nav className={styles.appNav}>
       <div className={styles.appLogo}>
-        <img src="invdrive.png" alt="InvDrive Logo" />
+        <label>Inv<span>Drive</span></label>
       </div>
       <ul className={`${styles.navOptions} ${navOpen ? styles.open : ""}`}>
         <li onClick={() => setNavOpen(false)}>

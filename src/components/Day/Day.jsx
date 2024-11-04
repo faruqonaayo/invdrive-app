@@ -1,9 +1,9 @@
 import { useState } from "react";
 
 const selectedStyle = {
-  backgroundColor: "#ebf6ff",
-  color: "#000080",
-  border: "2px solid #ffdab9",
+  color : "#ef8354",
+  border: "2px solid #ef8354",
+  backgroundColor: "#cbd3e2",
 };
 
 export default function Day({ dayName, className, dispatch }) {

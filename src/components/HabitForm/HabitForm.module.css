@@ -1,10 +1,11 @@
 .habitForm {
-  background-color: #ffffff;
+  background-color: #bfc0c0;
   width: 90%;
+  max-width: 500px;
   padding: 20px;
   margin: 20px auto;
-  border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 0 10px #ef8354;
 }
 
 .labelInput {
@@ -15,8 +16,8 @@
 
 .labelInput label {
   font-size: 1.05rem;
-  font-weight: 500;
-  color: #000080;
+  font-weight: 550;
+  color: #2d3142;
   margin-bottom: 3px;
 }
 
@@ -24,13 +25,12 @@
 .labelInput select,
 .labelInput textarea {
   padding: 5px;
-  border: 1px solid #000080;
   border-radius: 5px;
   font-size: 0.9rem;
   font-weight: 500;
-  color: #000080;
+  color: #2d3142;
   border: 2px solid transparent;
-  background-color: #f6fbff;
+  background-color: #ffffff;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
@@ -39,16 +39,16 @@
 .labelInput select:focus,
 .labelInput textarea:focus {
   outline: none;
-  border: 2px solid #ffdab9;
-  background-color: #ebf6ff;
+  border: 2px solid #ef8354;
+  background-color: #cbd3e2;
 }
 
 .labelInput input:hover,
 .labelInput select:hover,
 .labelInput textarea:hover {
   outline: none;
-  border: 2px solid #ffdab9;
-  background-color: #ebf6ff;
+  border: 2px solid #ef8354;
+  background-color: #cbd3e2;
 }
 
 .habitForm button {
@@ -58,15 +58,16 @@
   border-radius: 5px;
   font-size: 0.9rem;
   font-weight: 550;
-  color: #000080;
-  background-color: #6A8CAF;
+  color: #ffffff;
+  background-color: #2d3142;
   cursor: pointer;
   margin-top: 10px;
   transition: all 0.3s ease-in-out;
 }
 
 .habitForm button:hover {
-  background-color: #ffdab9;
+  background-color: #ef8354;
+  color: #2d3142;
 }
 
 .daysList {
@@ -78,24 +79,19 @@
 
 .daysList li {
   list-style: none;
-  border: 2px solid #d3d3d3;
-  color: #d3d3d3;
+  border: 2px solid #ffffff;
+  color: #ffffff;
   padding: 5px 8px;
   border-radius: 5px;
   font-size: 0.8rem;
-    font-weight: 450;
+  font-weight: 450;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
 
 .daysList li:hover {
-  background-color: #ffdab9;
-  color: #000080;
-}
-
-.daysList li.selected {
-  background-color: #ffdab9;
-  color: #000080;
+  border: 2px solid #ef8354;
+  background-color: #cbd3e2;
 }
 
 /* wider screen view */
@@ -104,5 +100,3 @@
     width: 40%;
   }
 }
-
-

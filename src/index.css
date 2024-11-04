@@ -5,12 +5,12 @@
 }
 
 body {
-  background-color: #d3d3d3;
+  background-color: #2d3142;
   font-family: "Montserrat", serif;
   font-optical-sizing: auto;
 }
 
 .active {
-  border-top: 2px solid #000080;
-  border-bottom: 2px solid #000080;
+  border-top: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
 }

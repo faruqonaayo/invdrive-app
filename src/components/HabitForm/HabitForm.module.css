@@ -1,0 +1,108 @@
+.habitForm {
+  background-color: #ffffff;
+  width: 90%;
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.labelInput {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.labelInput label {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #000080;
+  margin-bottom: 3px;
+}
+
+.labelInput input,
+.labelInput select,
+.labelInput textarea {
+  padding: 5px;
+  border: 1px solid #000080;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #000080;
+  border: 2px solid transparent;
+  background-color: #f6fbff;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.labelInput input:focus,
+.labelInput select:focus,
+.labelInput textarea:focus {
+  outline: none;
+  border: 2px solid #ffdab9;
+  background-color: #ebf6ff;
+}
+
+.labelInput input:hover,
+.labelInput select:hover,
+.labelInput textarea:hover {
+  outline: none;
+  border: 2px solid #ffdab9;
+  background-color: #ebf6ff;
+}
+
+.habitForm button {
+  width: 100%;
+  padding: 7px 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: 550;
+  color: #000080;
+  background-color: #6A8CAF;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease-in-out;
+}
+
+.habitForm button:hover {
+  background-color: #ffdab9;
+}
+
+.daysList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.daysList li {
+  list-style: none;
+  border: 2px solid #d3d3d3;
+  color: #d3d3d3;
+  padding: 5px 8px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+    font-weight: 450;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.daysList li:hover {
+  background-color: #ffdab9;
+  color: #000080;
+}
+
+.daysList li.selected {
+  background-color: #ffdab9;
+  color: #000080;
+}
+
+/* wider screen view */
+@media (min-width: 768px) {
+  .habitForm {
+    width: 40%;
+  }
+}
+
+

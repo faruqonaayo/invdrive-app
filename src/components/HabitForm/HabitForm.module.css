@@ -93,14 +93,8 @@
   transition: all 0.3s ease-in-out;
 }
 
-.daysList li:hover {
-  border: 2px solid #ef8354;
-  background-color: #cbd3e2;
-}
-
-
 @media (min-width: 768px) {
-  .habitForm{
+  .habitForm {
     width: 450px;
   }
 }

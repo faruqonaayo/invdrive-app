@@ -9,7 +9,6 @@ import styles from "./HabitForm.module.css";
 import { useReducer } from "react";
 import Day from "../Day/Day";
 
-
 const initialState = {
   habit: "",
   days: [],
@@ -64,60 +63,58 @@ export default function HabitForm() {
   }
 
   return (
-    <Container>
-      <Form className={styles.habitForm}>
-        <Container className={styles.labelInput}>
-          <Label labelText="Habit:" />
-          <Input
-            inputType="text"
-            inputName="habit"
-            inputPlaceholder="Enter habit"
-            inputValue={habit}
-            onChangeFunction={handleHabitChange}
-          />
-        </Container>
+    <Form className={styles.habitForm}>
+      <Container className={styles.labelInput}>
+        <Label labelText="Habit:" />
+        <Input
+          inputType="text"
+          inputName="habit"
+          inputPlaceholder="Enter habit"
+          inputValue={habit}
+          onChangeFunction={handleHabitChange}
+        />
+      </Container>
 
-        <Container className={styles.labelInput}>
-          <Label labelText="Days:" />
-          <ul className={styles.daysList}>
-            <Day dayName="Mon" dispatch={dispatch} />
-            <Day dayName="Tue" dispatch={dispatch} />
-            <Day dayName="Wed" dispatch={dispatch} />
-            <Day dayName="Thu" dispatch={dispatch} />
-            <Day dayName="Fri" dispatch={dispatch} />
-            <Day dayName="Sat" dispatch={dispatch} />
-            <Day dayName="Sun" dispatch={dispatch} />
-          </ul>
-        </Container>
-        <Container className={styles.labelInput}>
-          <Label labelText="Start Time:" />
-          <Input
-            inputType="time"
-            inputName="startTime"
-            inputValue={startTime}
-            onChangeFunction={handleStartTimeChange}
-          />
-        </Container>
-        <Container className={styles.labelInput}>
-          <Label labelText="End Time:" />
-          <Input
-            inputType="time"
-            inputName="endTime"
-            inputValue={endTime}
-            onChangeFunction={handleEndTimeChange}
-          />
-        </Container>
-        <Container className={styles.labelInput}>
-          <Label labelText="Note:" />
-          <textarea
-            name="note"
-            placeholder="Write a note"
-            value={note}
-            onChange={handleNoteChange}
-          ></textarea>
-        </Container>
-        <Button buttonText="Add Habit" buttonType="submit" />
-      </Form>
-    </Container>
+      <Container className={styles.labelInput}>
+        <Label labelText="Days:" />
+        <ul className={styles.daysList}>
+          <Day dayName="Mon" dispatch={dispatch} />
+          <Day dayName="Tue" dispatch={dispatch} />
+          <Day dayName="Wed" dispatch={dispatch} />
+          <Day dayName="Thu" dispatch={dispatch} />
+          <Day dayName="Fri" dispatch={dispatch} />
+          <Day dayName="Sat" dispatch={dispatch} />
+          <Day dayName="Sun" dispatch={dispatch} />
+        </ul>
+      </Container>
+      <Container className={styles.labelInput}>
+        <Label labelText="Start Time:" />
+        <Input
+          inputType="time"
+          inputName="startTime"
+          inputValue={startTime}
+          onChangeFunction={handleStartTimeChange}
+        />
+      </Container>
+      <Container className={styles.labelInput}>
+        <Label labelText="End Time:" />
+        <Input
+          inputType="time"
+          inputName="endTime"
+          inputValue={endTime}
+          onChangeFunction={handleEndTimeChange}
+        />
+      </Container>
+      <Container className={styles.labelInput}>
+        <Label labelText="Note:" />
+        <textarea
+          name="note"
+          placeholder="Write a note"
+          value={note}
+          onChange={handleNoteChange}
+        ></textarea>
+      </Container>
+      <Button buttonText="Add Habit" buttonType="submit" />
+    </Form>
   );
 }

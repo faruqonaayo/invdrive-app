@@ -10,8 +10,7 @@
 
 .authForm {
   background-color: #bfc0c0;
-  width: 95%;
-  max-width: 450px;
+  width: 90%;
   padding: 20px;
   margin: 20px auto;
   border-radius: 7px;
@@ -84,4 +83,10 @@
 
 .switchForm:hover {
   color: #ef8354;
+}
+
+@media (min-width: 768px) {
+  .authForm {
+    width: 450px;
+  }
 }

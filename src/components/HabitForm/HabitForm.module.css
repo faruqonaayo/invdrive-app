@@ -1,12 +1,10 @@
 .habitForm {
-  background-color: #BFC0C0;
-  width: 95%;
-  max-width: 450px;
+  background-color: #bfc0c0;
+  width: 90%;
   padding: 20px;
   margin: 20px auto;
   border-radius: 7px;
   box-shadow: 2px 2px 10px #2d3142;
-  
 }
 
 .labelInput {
@@ -36,7 +34,7 @@
   transition: all 0.3s ease-in-out;
 }
 
-.labelInput textarea{
+.labelInput textarea {
   height: 100px;
   resize: vertical;
 }
@@ -101,3 +99,8 @@
 }
 
 
+@media (min-width: 768px) {
+  .habitForm{
+    width: 450px;
+  }
+}

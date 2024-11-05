@@ -1,3 +1,31 @@
-.home{
-    padding: 10px 20px;
+.home {
+    width: 100%;
+  padding: 10px 20px;
+  display: flex;flex-direction: column;
+  align-items: center;
+}
+
+.addBtn {
+  width: 90%;
+  padding: 7px 10px;
+  border: none;
+  border-radius: 7px;
+  font-size: 0.9rem;
+  font-weight: 550;
+  color: #ffffff;
+  background-color: #ef8354;
+  cursor: pointer;
+  margin-top: 20px auto;
+  transition: all 0.3s ease-in-out;
+}
+
+.addBtn:hover {
+  background-color: #2d3142;
+  color: #ef8354;
+}
+
+@media (min-width: 768px) {
+  .addBtn{
+    width: 450px;
+  }
 }

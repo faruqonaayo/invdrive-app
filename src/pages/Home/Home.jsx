@@ -1,11 +1,13 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import HabitForm from "../../components/HabitForm/HabitForm";
 import styles from "./Home.module.css";
 import Container from "../../components/Container/Container";
 import Label from "../../components/Label/Label";
 import Habit from "./Habit";
-import HabitDetails from "./HabitDetails";
+import HabitDetails from "../../components/HabitDetails/HabitDetails";
+import Select from "../../components/Select/Select";
 
 const data = [
   {
@@ -14,6 +16,7 @@ const data = [
     completion: 6,
     startTime: "12:00",
     endTime: "2:00",
+    days: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
     note: "I wanna be consistent",
     done: true,
     dateAdded: new Date().toISOString().split("T")[0],
@@ -24,6 +27,7 @@ const data = [
     completion: 6,
     startTime: "18:00",
     endTime: "2:00",
+    days: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
     note: "I wanna be good",
     done: false,
     dateAdded: new Date().toISOString().split("T")[0],
@@ -37,6 +41,10 @@ export default function Home() {
 
   function handleViewForm() {
     setViewForm(!viewForm);
+  }
+
+  function handleCloseDetail() {
+    setSelectedHabit(null);
   }
 
   return (
@@ -78,7 +86,14 @@ export default function Home() {
         <HabitDetails
           selectedHabit={selectedHabit}
           onClose={setSelectedHabit}
-        />
+          habits={habits}
+          onSetHabits={setHabits}
+        >
+          <Button buttonText={"❌ Close"} onClickFunction={handleCloseDetail} />
+          <Link to="manage">
+            <Button buttonText={"📝 Manage"} />
+          </Link>
+        </HabitDetails>
       )}
     </div>
   );

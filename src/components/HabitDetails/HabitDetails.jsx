@@ -4,16 +4,21 @@ import Container from "../../components/Container/Container";
 import Label from "../../components/Label/Label";
 import styles from "./HabitDetails.module.css";
 
-export default function HabitDetails({ selectedHabit, onClose }) {
-  function handleCloseDetail() {
-    onClose(null);
-  }
+export default function HabitDetails({
+  selectedHabit,
+  children,
+}) {
+
   return (
     <Container className={styles.habitDetails}>
       <Container className={styles.habitInfos}>
         <Container className={styles.info}>
           <Label labelText="Habit: " />
           <p>{selectedHabit.habit}</p>
+        </Container>
+        <Container className={styles.info}>
+          <Label labelText="Days: " />
+          <p>{selectedHabit.days.toString()}</p>
         </Container>
         <Container className={styles.info}>
           <Label labelText="Date Added: " />
@@ -31,17 +36,13 @@ export default function HabitDetails({ selectedHabit, onClose }) {
           <Label labelText="End Time: " />
           <p>{selectedHabit.endTime}</p>
         </Container>
+
         <Container className={styles.info}>
           <Label labelText="Note: " />
           <p>{selectedHabit.note}</p>
         </Container>
       </Container>
-      <Container className={styles.action}>
-        <Button buttonText={"❌ Close"} onClickFunction={handleCloseDetail} />
-        <Link to="manage">
-          <Button buttonText={"📝 Manage"} />
-        </Link>
-      </Container>
+      <Container className={styles.action}>{children}</Container>
     </Container>
   );
 }

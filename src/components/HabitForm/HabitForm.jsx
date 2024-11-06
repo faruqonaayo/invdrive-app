@@ -6,7 +6,7 @@ import Option from "../Option/Option";
 import Label from "../Label/Label";
 import Button from "../Button/Button";
 import styles from "./HabitForm.module.css";
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import Day from "../Day/Day";
 
 const initialState = {
@@ -48,6 +48,8 @@ function reducer(state, action) {
 export default function HabitForm() {
   const [formState, dispatch] = useReducer(reducer, initialState);
   const { habit, days, startTime, endTime, note } = formState;
+  const [errorMessage, setErrorMessage] = useState("hello");
+  const [successMessage, setSuccessMessage] = useState("hi");
 
   function handleHabitChange(e) {
     dispatch({ type: "habit", payload: e.target.value });
@@ -62,8 +64,18 @@ export default function HabitForm() {
     dispatch({ type: "note", payload: e.target.value });
   }
 
+  function handleHabitSubmit(e) {
+    e.preventDefault();
+  }
+
   return (
-    <Form className={styles.habitForm}>
+    <Form className={styles.habitForm} onSubmitFunc={handleHabitSubmit}>
+      {errorMessage !== "" && (
+        <p className={styles.errorMessage}>{errorMessage}</p>
+      )}
+      {successMessage !== "" && (
+        <p className={styles.successMessage}>{successMessage}</p>
+      )}
       <Container className={styles.labelInput}>
         <Label labelText="Habit:" />
         <Input

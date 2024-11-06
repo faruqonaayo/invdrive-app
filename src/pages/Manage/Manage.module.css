@@ -1,0 +1,21 @@
+.manage {
+  width: 100%;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 70px;
+}
+
+.habitList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px;
+}
+@media (min-width: 768px) {
+  .habitList {
+    width: 450px;
+  }
+}

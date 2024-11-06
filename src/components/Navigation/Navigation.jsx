@@ -28,7 +28,6 @@ export default function Navigation() {
       <div className={styles.burgerBtn} onClick={toggleNav}>
         <span></span>
         <span></span>
-        <span></span>
       </div>
     </nav>
   );

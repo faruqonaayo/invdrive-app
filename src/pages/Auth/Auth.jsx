@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import Container from "../../components/Container/Container";
 import Input from "../../components/Input/Input";
 import Label from "../../components/Label/Label";
@@ -47,6 +47,9 @@ export default function Auth() {
   const { formType, firstName, lastName, email, password, cPassword } =
     formState;
 
+  const [errorMessage, setErrorMessage] = useState("hello");
+  const [successMessage, setSuccessMessage] = useState("hi");
+
   function handleFormChange() {
     dispatch({ type: "formChange" });
   }
@@ -69,6 +72,12 @@ export default function Auth() {
   return (
     <Container className={styles.auth}>
       <Form className={styles.authForm}>
+        {errorMessage !== "" && (
+          <p className={styles.errorMessage}>{errorMessage}</p>
+        )}
+        {successMessage !== "" && (
+          <p className={styles.successMessage}>{successMessage}</p>
+        )}
         {formType === "signup" && (
           <>
             {" "}
@@ -130,8 +139,13 @@ export default function Auth() {
           </>
         )}
 
-        <p onClick={handleFormChange} className={styles.switchForm}>{formType === "signup" ? "Already a member?" : "Want to register?" }</p>
-        <Button buttonText={`${formType === "signup" ? "Sign Up" : "Login"}`} buttonType="submit" />
+        <p onClick={handleFormChange} className={styles.switchForm}>
+          {formType === "signup" ? "Already a member?" : "Want to register?"}
+        </p>
+        <Button
+          buttonText={`${formType === "signup" ? "Sign Up" : "Login"}`}
+          buttonType="submit"
+        />
       </Form>
     </Container>
   );

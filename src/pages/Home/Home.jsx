@@ -4,12 +4,41 @@ import HabitForm from "../../components/HabitForm/HabitForm";
 import styles from "./Home.module.css";
 import Container from "../../components/Container/Container";
 import Label from "../../components/Label/Label";
+import Habit from "./Habit";
+import HabitDetails from "./HabitDetails";
+
+const data = [
+  {
+    id: 1,
+    habit: "Sleep",
+    completion: 6,
+    startTime: "12:00",
+    endTime: "2:00",
+    note: "I wanna be consistent",
+    done: true,
+    dateAdded: new Date().toISOString().split("T")[0],
+  },
+  {
+    id: 2,
+    habit: "Eat",
+    completion: 6,
+    startTime: "18:00",
+    endTime: "2:00",
+    note: "I wanna be good",
+    done: false,
+    dateAdded: new Date().toISOString().split("T")[0],
+  },
+];
+
 export default function Home() {
+  const [habits, setHabits] = useState(data);
   const [viewForm, setViewForm] = useState(false);
+  const [selectedHabit, setSelectedHabit] = useState(null);
 
   function handleViewForm() {
     setViewForm(!viewForm);
   }
+
   return (
     <div className={styles.home}>
       <Container className={styles.homeHeader}>
@@ -30,6 +59,27 @@ export default function Home() {
       </Container>
 
       {viewForm && <HabitForm />}
+
+      {!viewForm && !selectedHabit && (
+        <ul className={styles.habitList}>
+          {habits.map((h) => (
+            <Habit
+              key={h.id}
+              habitData={h}
+              onSelectHabit={setSelectedHabit}
+              setHabits={setHabits}
+              habits={habits}
+            />
+          ))}
+        </ul>
+      )}
+
+      {!viewForm && selectedHabit && (
+        <HabitDetails
+          selectedHabit={selectedHabit}
+          onClose={setSelectedHabit}
+        />
+      )}
     </div>
   );
 }

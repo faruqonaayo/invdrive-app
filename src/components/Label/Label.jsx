@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 
-export default function Label({ labelFor, labelText }) {
+export default function Label({ labelFor, labelText, style }) {
   return (
-    <label htmlFor={labelFor} className={`label`}>
+    <label htmlFor={labelFor} className={`label`} style={style}>
       {labelText}
     </label>
   );
@@ -11,4 +11,5 @@ export default function Label({ labelFor, labelText }) {
 Label.propTypes = {
   labelFor: PropTypes.node,
   labelText: PropTypes.string,
+  style: PropTypes.object,
 };

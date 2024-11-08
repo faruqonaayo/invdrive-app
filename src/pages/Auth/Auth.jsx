@@ -1,10 +1,12 @@
-import { useReducer, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
+import axios from "axios";
 import Container from "../../components/Container/Container";
 import Input from "../../components/Input/Input";
 import Label from "../../components/Label/Label";
 import Form from "../../components/Form/Form";
 import Button from "../../components/Button/Button";
 import styles from "./Auth.module.css";
+import { Navigate } from "react-router-dom";
 
 const initialState = {
   formType: "login",
@@ -12,7 +14,7 @@ const initialState = {
   lastName: "",
   email: "",
   password: "",
-  cPassword: "",
+  confirmPassword: "",
 };
 
 function reducer(state, action) {
@@ -36,19 +38,37 @@ function reducer(state, action) {
       return { ...state, email: action.payload };
     case "password":
       return { ...state, password: action.payload };
-    case "cPassword":
-      return { ...state, cPassword: action.payload };
+    case "confirmPassword":
+      return { ...state, confirmPassword: action.payload };
     default:
       return state;
   }
 }
-export default function Auth() {
+export default function Auth({ isAuth, onSetAuth }) {
   const [formState, dispatch] = useReducer(reducer, initialState);
-  const { formType, firstName, lastName, email, password, cPassword } =
+  const { formType, firstName, lastName, email, password, confirmPassword } =
     formState;
 
-  const [errorMessage, setErrorMessage] = useState("hello");
-  const [successMessage, setSuccessMessage] = useState("hi");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
+  useEffect(() => {
+    async function confirmAuth() {
+      try {
+        const res = await axios.get("http://localhost:3000/auth/checkAuth", {
+          headers: { Authorization: localStorage.getItem("InvDrive") },
+        });
+        if (res.data.statusCode === 200) {
+          onSetAuth(true);
+        }
+      } catch (error) {
+        console.log(error);
+        onSetAuth(false);
+      }
+    }
+
+    confirmAuth();
+  }, []);
 
   function handleFormChange() {
     dispatch({ type: "formChange" });
@@ -66,12 +86,72 @@ export default function Auth() {
     dispatch({ type: "password", payload: e.target.value });
   }
   function handleCPasswordChange(e) {
-    dispatch({ type: "cPassword", payload: e.target.value });
+    dispatch({ type: "confirmPassword", payload: e.target.value });
+  }
+
+  async function handleAuthSubmit(e) {
+    try {
+      e.preventDefault();
+      if (formType === "signup") {
+        const dataToSubmit = {
+          firstName,
+          lastName,
+          email,
+          password,
+          confirmPassword,
+        };
+        const response = await axios.put(
+          "http://localhost:3000/auth/signup",
+          dataToSubmit
+        );
+
+        // setting success message
+        setErrorMessage("");
+        setSuccessMessage(response.data.message);
+
+        // setting form fields to empty except email
+        dispatch({ type: "firstName", payload: "" });
+        dispatch({ type: "lastName", payload: "" });
+        dispatch({ type: "password", payload: "" });
+        dispatch({ type: "confirmPassword", payload: "" });
+        dispatch({ type: "formChange" });
+      } else if (formType === "login") {
+        const dataToSubmit = {
+          email,
+          password,
+        };
+        const response = await axios.post(
+          "http://localhost:3000/auth/login",
+          dataToSubmit
+        );
+
+        // setting success message
+        setErrorMessage("");
+        setSuccessMessage(response.data.message);
+        localStorage.setItem("InvDrive", `Bearer ${response.data.token}`);
+
+        // setting form fields to empty
+        dispatch({ type: "password", payload: "" });
+        dispatch({ type: "email", payload: "" });
+
+        setTimeout(() => {
+          onSetAuth(true);
+        }, 2000);
+      }
+    } catch (error) {
+      console.log(error);
+      setSuccessMessage("");
+      setErrorMessage(error.response.data.message);
+    }
+  }
+
+  if (isAuth) {
+    return <Navigate to="/" />;
   }
 
   return (
     <Container className={styles.auth}>
-      <Form className={styles.authForm}>
+      <Form className={styles.authForm} onSubmitFunc={handleAuthSubmit}>
         {errorMessage !== "" && (
           <p className={styles.errorMessage}>{errorMessage}</p>
         )}
@@ -132,7 +212,7 @@ export default function Auth() {
                 inputType="password"
                 inputName="cPassword"
                 inputPlaceholder="Confirm your password"
-                inputValue={cPassword}
+                inputValue={confirmPassword}
                 onChangeFunction={handleCPasswordChange}
               />
             </Container>

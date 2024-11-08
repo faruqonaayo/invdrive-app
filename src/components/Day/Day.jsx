@@ -6,11 +6,11 @@ const selectedStyle = {
   backgroundColor: "#cbd3e2",
 };
 
-export default function Day({ dayName, className, dispatch }) {
+export default function Day({ dayName, dayInt, className, dispatch }) {
   const [isSelected, setIsSelected] = useState(false);
 
   function handleClick() {
-    dispatch({ type: "day", payload: dayName });
+    dispatch({ type: "day", payload: dayInt });
     setIsSelected(!isSelected);
   }
 

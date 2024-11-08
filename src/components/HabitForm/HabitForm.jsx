@@ -1,3 +1,5 @@
+import { useReducer, useState } from "react";
+import axios from "axios";
 import Container from "../Container/Container";
 import Form from "../Form/Form";
 import Input from "../Input/Input";
@@ -6,7 +8,6 @@ import Option from "../Option/Option";
 import Label from "../Label/Label";
 import Button from "../Button/Button";
 import styles from "./HabitForm.module.css";
-import { useReducer, useState } from "react";
 import Day from "../Day/Day";
 
 const initialState = {
@@ -48,8 +49,8 @@ function reducer(state, action) {
 export default function HabitForm() {
   const [formState, dispatch] = useReducer(reducer, initialState);
   const { habit, days, startTime, endTime, note } = formState;
-  const [errorMessage, setErrorMessage] = useState("hello");
-  const [successMessage, setSuccessMessage] = useState("hi");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   function handleHabitChange(e) {
     dispatch({ type: "habit", payload: e.target.value });
@@ -64,8 +65,38 @@ export default function HabitForm() {
     dispatch({ type: "note", payload: e.target.value });
   }
 
-  function handleHabitSubmit(e) {
-    e.preventDefault();
+  async function handleHabitSubmit(e) {
+    try {
+      e.preventDefault();
+      const dataToSubmit = {
+        habit,
+        days,
+        startTime,
+        endTime,
+        note,
+      };
+
+      const res = await axios.put(
+        "http://localhost:3000/admin/habit",
+        dataToSubmit,
+        { headers: { Authorization: localStorage.getItem("InvDrive") } }
+      );
+      if (res.data.statusCode === 201) {
+        setErrorMessage("");
+        setSuccessMessage(res.data.message);
+
+        // Reset form
+        dispatch({ type: "habit", payload: "" });
+        dispatch({ type: "days", payload: [] });
+        dispatch({ type: "startTime", payload: "" });
+        dispatch({ type: "endTime", payload: "" });
+        dispatch({ type: "note", payload: "" });
+      }
+    } catch (error) {
+      console.log(error);
+      setSuccessMessage("");
+      setErrorMessage(error.response.data.message);
+    }
   }
 
   return (
@@ -90,13 +121,13 @@ export default function HabitForm() {
       <Container className={styles.labelInput}>
         <Label labelText="Days:" />
         <ul className={styles.daysList}>
-          <Day dayName="Mon" dispatch={dispatch} />
-          <Day dayName="Tue" dispatch={dispatch} />
-          <Day dayName="Wed" dispatch={dispatch} />
-          <Day dayName="Thu" dispatch={dispatch} />
-          <Day dayName="Fri" dispatch={dispatch} />
-          <Day dayName="Sat" dispatch={dispatch} />
-          <Day dayName="Sun" dispatch={dispatch} />
+          <Day dayName="Mon" dayInt={1} dispatch={dispatch} />
+          <Day dayName="Tue" dayInt={2} dispatch={dispatch} />
+          <Day dayName="Wed" dayInt={3} dispatch={dispatch} />
+          <Day dayName="Thu" dayInt={4} dispatch={dispatch} />
+          <Day dayName="Fri" dayInt={5} dispatch={dispatch} />
+          <Day dayName="Sat" dayInt={6} dispatch={dispatch} />
+          <Day dayName="Sun" dayInt={7} dispatch={dispatch} />
         </ul>
       </Container>
       <Container className={styles.labelInput}>

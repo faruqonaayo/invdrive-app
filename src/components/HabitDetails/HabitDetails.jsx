@@ -22,11 +22,11 @@ export default function HabitDetails({
         </Container>
         <Container className={styles.info}>
           <Label labelText="Date Added: " />
-          <p>{selectedHabit.dateAdded}</p>
+          <p>{selectedHabit.dateCreated}</p>
         </Container>
         <Container className={styles.info}>
           <Label labelText="Number of Completions: " />
-          <p>{selectedHabit.completion}</p>
+          <p>{selectedHabit.completionDates.length}</p>
         </Container>
         <Container className={styles.info}>
           <Label labelText="Start Time: " />

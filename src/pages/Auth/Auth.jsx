@@ -68,7 +68,7 @@ export default function Auth({ isAuth, onSetAuth }) {
     }
 
     confirmAuth();
-  }, []);
+  });
 
   function handleFormChange() {
     dispatch({ type: "formChange" });
@@ -136,7 +136,7 @@ export default function Auth({ isAuth, onSetAuth }) {
 
         setTimeout(() => {
           onSetAuth(true);
-        }, 2000);
+        }, 1000);
       }
     } catch (error) {
       console.log(error);

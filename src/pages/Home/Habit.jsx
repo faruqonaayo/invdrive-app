@@ -2,25 +2,49 @@ import Container from "../../components/Container/Container";
 import Label from "../../components/Label/Label";
 import Button from "../../components/Button/Button";
 import styles from "./Habit.module.css";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const doneStyle = {
   textDecoration: "line-through",
   color: "gray",
 };
 
-export default function Habit({ habitData, onSelectHabit, habits, setHabits }) {
+export default function Habit({ habitData, onSelectHabit }) {
+  const [habitDone, setHabitDone] = useState(false);
   function handleSelectedHabit() {
     onSelectHabit(habitData);
   }
+  useEffect(() => {
+    // this function checks if the habit is done
+    async function checkHabitDone() {
+      habitData.completionDates.forEach((date) => {
+        if (date.split("T")[0] === new Date().toISOString().split("T")[0]) {
+          setHabitDone(true);
+        }
+      });
+    }
+    checkHabitDone();
+  }, [habitData]);
 
-  function handleHabitDone() {
-    const modifiedHabits = habits.map((h) => {
-      if (h.id === habitData.id) {
-        h.done = !h.done;
+  // lift this up later
+  async function handleHabitDone() {
+    try {
+      const response = await axios.post(
+        `http://localhost:3000/admin/check/${habitData._id}`,
+        {},
+        {
+          headers: {
+            Authorization: localStorage.getItem("InvDrive"),
+          },
+        }
+      );
+      if (response.data.statusCode === 200) {
+        setHabitDone(!habitDone);
       }
-      return h;
-    });
-    setHabits(modifiedHabits);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -28,7 +52,7 @@ export default function Habit({ habitData, onSelectHabit, habits, setHabits }) {
       <Container className={styles.habitHeader}>
         <Label
           labelText={`${habitData.habit}`}
-          style={habitData.done ? doneStyle : null}
+          style={habitDone ? doneStyle : null}
         />
         <span>
           <Label labelText={`${habitData.startTime} - ${habitData.endTime}`} />
@@ -36,7 +60,7 @@ export default function Habit({ habitData, onSelectHabit, habits, setHabits }) {
       </Container>
       <Container className={styles.action}>
         <Button
-          buttonText={habitData.done ? "Not Done" : "Done"}
+          buttonText={habitDone ? "Not Done" : "Done"}
           onClickFunction={handleHabitDone}
         />
         <Button buttonText="View" onClickFunction={handleSelectedHabit} />

@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Container from "../../components/Container/Container";
 import Habit from "../Home/Habit";
 import HabitDetails from "../../components/HabitDetails/HabitDetails";
 import styles from "./Manage.module.css";
 import Button from "../../components/Button/Button";
+import axios from "axios";
 
 const data = [
   {
@@ -42,21 +43,65 @@ const data = [
 ];
 
 export default function Manage() {
-  const [habits, setHabits] = useState(data);
+  const [habits, setHabits] = useState([]);
 
-  function handleHabitDelete(id) {
-    const newHabits = habits.filter((h) => h.id !== id);
-    setHabits(newHabits);
+  useEffect(() => {
+    // this function is used to fetch all the habits from the server
+    async function fetchAllHabits() {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/admin/allHabits",
+          {
+            headers: {
+              Authorization: localStorage.getItem("InvDrive"),
+            },
+          }
+        );
+
+        if (response.data.statusCode === 200) {
+          setHabits(response.data.habits);
+        }
+      } catch (error) {
+        console.error(error);
+        if (error.response.status === 401) {
+          window.location.href = "/auth";
+        }
+      }
+    }
+    fetchAllHabits();
+  }, []);
+
+  // this function is used to delete a habit
+  async function handleHabitDelete(id) {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/admin/habit/${id}`,
+        {
+          headers: {
+            Authorization: localStorage.getItem("InvDrive"),
+          },
+        }
+      );
+      if (response.data.statusCode === 200) {
+        const newHabits = habits.filter((h) => h._id !== id);
+        setHabits(newHabits);
+      }
+    } catch (error) {
+      console.error(error);
+      if (error.response.status === 401) {
+        window.location.href = "/auth";
+      }
+    }
   }
   return (
     <Container className={styles.manage}>
       <Container className={styles.habitList}>
         {habits.map((habit) => (
-          <HabitDetails key={habit.id} selectedHabit={habit}>
+          <HabitDetails key={habit._id} selectedHabit={habit}>
             <Container className={styles.action}>
               <Button
                 buttonText={"🗑️ Delete"}
-                onClickFunction={() => handleHabitDelete(habit.id)}
+                onClickFunction={() => handleHabitDelete(habit._id)}
               />
             </Container>
           </HabitDetails>

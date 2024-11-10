@@ -10,7 +10,7 @@ const doneStyle = {
   color: "gray",
 };
 
-export default function Habit({ habitData, onSelectHabit }) {
+export default function Habit({ habitData, onSelectHabit, BASE_URL }) {
   const [habitDone, setHabitDone] = useState(false);
   function handleSelectedHabit() {
     onSelectHabit(habitData);
@@ -31,7 +31,7 @@ export default function Habit({ habitData, onSelectHabit }) {
   async function handleHabitDone() {
     try {
       const response = await axios.post(
-        `http://localhost:3000/admin/check/${habitData._id}`,
+        `${BASE_URL}/admin/check/${habitData._id}`,
         {},
         {
           headers: {

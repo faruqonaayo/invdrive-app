@@ -10,32 +10,7 @@ import HabitDetails from "../../components/HabitDetails/HabitDetails";
 import Select from "../../components/Select/Select";
 import axios from "axios";
 
-const data = [
-  {
-    id: 1,
-    habit: "Sleep",
-    completion: 6,
-    startTime: "12:00",
-    endTime: "2:00",
-    days: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-    note: "I wanna be consistent",
-    done: true,
-    dateAdded: new Date().toISOString().split("T")[0],
-  },
-  {
-    id: 2,
-    habit: "Eat",
-    completion: 6,
-    startTime: "18:00",
-    endTime: "2:00",
-    days: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-    note: "I wanna be good",
-    done: false,
-    dateAdded: new Date().toISOString().split("T")[0],
-  },
-];
-
-export default function Home() {
+export default function Home({ BASE_URL, isAuth, onSetAuth }) {
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
@@ -50,14 +25,11 @@ export default function Home() {
     // this function is used to fetch the user data from the server
     async function fetchUserData() {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/auth/checkAuth",
-          {
-            headers: {
-              Authorization: localStorage.getItem("InvDrive"),
-            },
-          }
-        );
+        const response = await axios.get(`${BASE_URL}/auth/checkAuth`, {
+          headers: {
+            Authorization: localStorage.getItem("InvDrive"),
+          },
+        });
 
         if (response.data.statusCode === 200) {
           setUser(response.data.user);
@@ -65,7 +37,7 @@ export default function Home() {
       } catch (error) {
         console.log(error);
         if (error.response.status === 401) {
-          window.location.href = "/auth";
+          onSetAuth(false);
         }
       }
     }
@@ -74,7 +46,7 @@ export default function Home() {
     async function fetchTodayHabits() {
       try {
         const response = await axios.get(
-          "http://localhost:3000/admin/todayHabits",
+          `${BASE_URL}/admin/todayHabits?day=1`,
           {
             headers: {
               Authorization: localStorage.getItem("InvDrive"),
@@ -88,7 +60,7 @@ export default function Home() {
       } catch (error) {
         console.log(error);
         if (error.response.status === 401) {
-          window.location.href = "/auth";
+          onSetAuth(false);
         }
       }
     }
@@ -103,6 +75,10 @@ export default function Home() {
 
   function handleCloseDetail() {
     setSelectedHabit(null);
+  }
+
+  if (!isAuth) {
+    return <Navigate to="/auth" />;
   }
 
   return (
@@ -125,7 +101,7 @@ export default function Home() {
         </Container>
       </Container>
 
-      {viewForm && <HabitForm />}
+      {viewForm && <HabitForm BASE_URL={BASE_URL} />}
 
       {!viewForm && !selectedHabit && (
         <ul className={styles.habitList}>
@@ -134,8 +110,7 @@ export default function Home() {
               key={h._id}
               habitData={h}
               onSelectHabit={setSelectedHabit}
-              setHabits={setTodayHabits}
-              habits={todayHabits}
+              BASE_URL={BASE_URL}
             />
           ))}
         </ul>

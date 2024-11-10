@@ -44,7 +44,7 @@ function reducer(state, action) {
       return state;
   }
 }
-export default function Auth({ isAuth, onSetAuth }) {
+export default function Auth({ isAuth, onSetAuth, BASE_URL }) {
   const [formState, dispatch] = useReducer(reducer, initialState);
   const { formType, firstName, lastName, email, password, confirmPassword } =
     formState;
@@ -55,7 +55,7 @@ export default function Auth({ isAuth, onSetAuth }) {
   useEffect(() => {
     async function confirmAuth() {
       try {
-        const res = await axios.get("http://localhost:3000/auth/checkAuth", {
+        const res = await axios.get(`${BASE_URL}/auth/checkAuth`, {
           headers: { Authorization: localStorage.getItem("InvDrive") },
         });
         if (res.data.statusCode === 200) {
@@ -101,7 +101,7 @@ export default function Auth({ isAuth, onSetAuth }) {
           confirmPassword,
         };
         const response = await axios.put(
-          "http://localhost:3000/auth/signup",
+          `${BASE_URL}/auth/signup`,
           dataToSubmit
         );
 
@@ -121,7 +121,7 @@ export default function Auth({ isAuth, onSetAuth }) {
           password,
         };
         const response = await axios.post(
-          "http://localhost:3000/auth/login",
+          `${BASE_URL}/auth/login`,
           dataToSubmit
         );
 

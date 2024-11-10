@@ -46,7 +46,7 @@ function reducer(state, action) {
       return state;
   }
 }
-export default function HabitForm() {
+export default function HabitForm({ BASE_URL }) {
   const [formState, dispatch] = useReducer(reducer, initialState);
   const { habit, days, startTime, endTime, note } = formState;
   const [errorMessage, setErrorMessage] = useState("");
@@ -76,11 +76,9 @@ export default function HabitForm() {
         note,
       };
 
-      const res = await axios.put(
-        "http://localhost:3000/admin/habit",
-        dataToSubmit,
-        { headers: { Authorization: localStorage.getItem("InvDrive") } }
-      );
+      const res = await axios.put(`${BASE_URL}/admin/habit`, dataToSubmit, {
+        headers: { Authorization: localStorage.getItem("InvDrive") },
+      });
       if (res.data.statusCode === 201) {
         setErrorMessage("");
         setSuccessMessage(res.data.message);
